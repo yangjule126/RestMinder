@@ -20,7 +20,7 @@
 #define APP_VERSION      L"v1.2.0"
 
 NOTIFYICONDATA nid = { 0 };
-UINT WM_TASKBARCREATED;   // ? 新增
+UINT WM_TASKBARCREATED; 
 
 std::wstring g_configPath;
 bool g_running = true;
@@ -344,7 +344,7 @@ LRESULT CALLBACK AboutProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
         HWND hAuthor = CreateWindow(
             L"STATIC",
-            L"作者：基础运维部",
+            L"作者：从今",
             WS_VISIBLE | WS_CHILD,
             20, 95, 200, 20,
             hWnd,
@@ -436,7 +436,6 @@ LRESULT CALLBACK AboutProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 // ================= 主窗口过程 =================
 LRESULT CALLBACK MainProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-    // ? 新增：Explorer 重启后重新添加托盘图标
     if (msg == WM_TASKBARCREATED)
     {
         AddTrayIcon(hWnd);
@@ -446,7 +445,7 @@ LRESULT CALLBACK MainProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     if (msg == WM_TRAYICON && lParam == WM_RBUTTONUP)
     {
         HMENU menu = CreatePopupMenu();
-        AppendMenu(menu, MF_STRING, ID_TRAY_STATUS, L"查看状态");
+        AppendMenu(menu, MF_STRING, ID_TRAY_STATUS, L"状态");
         AppendMenu(menu, MF_STRING, ID_TRAY_SETTINGS, L"设置");
         AppendMenu(menu, MF_STRING, ID_TRAY_ABOUT, L"关于");
         AppendMenu(menu, MF_SEPARATOR, 0, NULL);
@@ -519,7 +518,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
     g_configPath = GetExeDirectory() + L"\\config.ini";
     ReloadConfig();
 
-    // ? 新增：注册TaskbarCreated消息
     WM_TASKBARCREATED = RegisterWindowMessage(L"TaskbarCreated");
 
     WNDCLASS wc = { 0 };
